@@ -3,6 +3,8 @@ import matplotlib.pyplot as plt
 from formula import lagrange_formula
 from lagrange_interpolation import lagrange_interpolation
 from find_optimal import find_optimal_n
+from convergence_research import evaluate_max_deviation
+
 
 # Определение первой функции
 def f1(x):
@@ -12,6 +14,7 @@ def f1(x):
 # Определение второй функции
 def f2(x):
     return np.abs(np.sin(4 * x)) * np.exp(2 * x)
+
 
 n_values = [3, 5, 9, 17]
 
@@ -49,18 +52,46 @@ max_deviation2 = np.max(np.abs(y_interpolated2 - f2(x_fine2)))
 print(f'Максимальное отклонение |Pn(x) - f1(x)| = {max_deviation1}')
 print('Формула Лагранжа для f1(x):')
 print(lagrange_formula(x_nodes1, y_nodes2))
+
 print(f'Максимальное отклонение |Pn(x) - f2(x)| = {max_deviation2}')
 print('Формула Лагранжа для f2(x):')
 print(lagrange_formula(x_nodes2, y_nodes2))
 
-# Нахождение оптимального n для каждой функции
-
+# Нахождение оптимального n для каждой функции (n = 3, 5, 9, 17)
 optimal_n1, min_deviation1 = find_optimal_n(f1, n_values, 1001)
-optimal_n2, min_deviation2 = find_optimal_n(f2, n_values,  1001)
+optimal_n2, min_deviation2 = find_optimal_n(f2, n_values, 1001)
 
 # Вывод оптимальных n и соответствующих максимальных отклонений
 print(f'Оптимальное количество узлов для f1(x): {optimal_n1}, минимальное максимальное отклонение: {min_deviation1}')
 print(f'Оптимальное количество узлов для f2(x): {optimal_n2}, минимальное максимальное отклонение: {min_deviation2}')
+
+# Исследование интерполяции для n в [1,17]
+n1, deviations_f1 = evaluate_max_deviation(f1, 1, 17)
+n2, deviations_f2 = evaluate_max_deviation(f2, 1, 17)
+
+# Визуализация зависимости отклонения от числа узлов
+plt.figure(figsize=(14, 6))
+
+# График для первой функции
+plt.subplot(1, 2, 1)
+plt.plot(n1, deviations_f1, marker='o', label='f1(x)', color='blue')
+plt.title('Максимальное отклонение для f1(x)')
+plt.xlabel('Число узлов (n)')
+plt.ylabel('Максимальное отклонение')
+plt.grid()
+plt.xticks(n1)
+
+# График для второй функции
+plt.subplot(1, 2, 2)
+plt.plot(n2, deviations_f2, marker='o', label='f2(x)', color='orange')
+plt.title('Максимальное отклонение для f2(x)')
+plt.xlabel('Число узлов (n)')
+plt.ylabel('Максимальное отклонение')
+plt.grid()
+plt.xticks(n2)
+
+plt.tight_layout()
+plt.show()
 
 # Визуализация
 plt.figure(figsize=(12, 8))
