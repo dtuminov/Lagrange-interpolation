@@ -16,7 +16,7 @@ def f2(x):
     return np.abs(np.sin(4 * x)) * np.exp(2 * x)
 
 
-n_values = [3, 5, 9, 17]
+n_values = [3, 5, 9, 17] # Количество узлов интерполяции
 
 # Настройка значений узлов интерполяции для первой функции
 n1 = 5  # Число узлов для первой функции
@@ -96,9 +96,18 @@ plt.show()
 # Визуализация
 plt.figure(figsize=(12, 8))
 
+# Построение интерполяционных многочленов для первой функции
+for n in n_values:
+    x_nodes1 = np.linspace(0, 2, n)
+    y_nodes1 = f1(x_nodes1)
+    y_interpolated1 = lagrange_interpolation(x_fine1, x_nodes1, y_nodes1)
+
+    plt.subplot(2, 1, 1)
+    plt.plot(x_fine1, y_interpolated1, label=f'n={n}', alpha=0.7)  # Интерполяционный многочлен
+    plt.scatter(x_nodes1, y_nodes1, color='red', zorder=5)  # Узлы интерполяции
+
 # График первой функции и её интерполяции
 plt.subplot(2, 1, 1)
-plt.plot(x_values1, y_values1, label='Интерполяционный многочлен Лагранжа f1(x)', color='blue')
 plt.scatter(x_nodes1, y_nodes1, color='red', label='Узлы интерполяции', zorder=5)
 plt.plot(x_values1, f1(x_values1), label='Исходная функция f1(x)', color='green', linestyle='dashed')
 plt.title('Интерполяция для f1(x) = (63 * x^5) / 8 - (35 * x^3) / 4 + (15 * x) / 8')
@@ -109,9 +118,19 @@ plt.grid()
 plt.xlim(0, 2)
 plt.ylim(-40, 220)  # Ограничение оси y для первой функции
 
+# Построение интерполяционных многочленов для второй функции
+for n in n_values:
+    x_nodes2 = np.linspace(0, 2, n)
+    y_nodes2 = f2(x_nodes2)
+    y_interpolated2 = lagrange_interpolation(x_fine2, x_nodes2, y_nodes2)
+
+    plt.subplot(2, 1, 2)
+    plt.plot(x_fine2, y_interpolated2, label=f'n={n}', alpha=0.7)  # Интерполяционный многочлен
+    plt.scatter(x_nodes2, y_nodes2, color='red', zorder=5)  # Узлы интерполяции
+
 # График второй функции и её интерполяции
 plt.subplot(2, 1, 2)
-plt.plot(x_values2, y_values2, label='Интерполяционный многочлен Лагранжа f2(x)', color='blue')
+#plt.plot(x_values2, y_values2, label='Интерполяционный многочлен Лагранжа f2(x)', color='blue')
 plt.scatter(x_nodes2, y_nodes2, color='red', label='Узлы интерполяции', zorder=5)
 plt.plot(x_values2, f2(x_values2), label='Исходная функция f2(x)', color='green', linestyle='dashed')
 plt.title('Интерполяция для f2(x) = |sin(4x)| * exp(2x)')
