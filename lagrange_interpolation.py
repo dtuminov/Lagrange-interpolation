@@ -1,4 +1,3 @@
-# Лагранжев интерполяционный многочлен
 def lagrange_interpolation(x, x_nodes, y_nodes):
     L = 0
     n = len(x_nodes)

@@ -9,13 +9,9 @@ def find_optimal_n(func, n_values, num_samples=1001):
     for n in n_values:
         # Генерируем узлы интерполяции
         nodes = np.linspace(0, 2, n)
-        # Вычисляем значения функции в узлах
         y_nodes = func(nodes)
 
-        # Создаем более плотную выборку для вычисления интерполяции
         x_fine = np.linspace(0, 2, num_samples)
-
-        # Вычисляем интерполированные значения
         y_interpolated = lagrange_interpolation(x_fine, nodes, y_nodes)
 
         # Вычисляем максимальное отклонение от оригинальной функции

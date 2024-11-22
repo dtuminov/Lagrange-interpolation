@@ -9,11 +9,9 @@ def evaluate_max_deviation(func, n_start, n_end):
     x_fine = np.linspace(0, 2, 1001)  # Равномерная сетка из 1001 узла
 
     for n in n_values:
-        # Настройка значений узлов интерполяции
         x_nodes = np.linspace(0, 2, n)
         y_nodes = func(x_nodes)
 
-        # Вычисление значений интерполяционного многочлена
         y_interpolated = lagrange_interpolation(x_fine, x_nodes, y_nodes)
 
         # Вычисление максимального отклонения

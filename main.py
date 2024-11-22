@@ -29,14 +29,14 @@ x_nodes2 = np.linspace(0, 2, n2)
 y_nodes2 = f2(x_nodes2)
 
 # Создание значений для оси x для интерполяции первой функции
-x_values1 = np.linspace(0, 2, 1001)  # Новый диапазон x для первой функции
+x_values1 = np.linspace(0, 2, 1001)
 y_values1 = lagrange_interpolation(x_values1, x_nodes1, y_nodes1)
 
 # Создание значений для оси x для интерполяции второй функции
-x_values2 = np.linspace(0, 2, 1001)  # Новый диапазон x для второй функции
+x_values2 = np.linspace(0, 2, 1001)
 y_values2 = lagrange_interpolation(x_values2, x_nodes2, y_nodes2)
 
-# Равномерная сетка из 1001 узла для исследуемых функций
+# Равномерная сетка из 1001 узла
 x_fine1 = np.linspace(0, 2, 1001)
 x_fine2 = np.linspace(0, 2, 1001)
 
@@ -51,10 +51,14 @@ max_deviation2 = np.max(np.abs(y_interpolated2 - f2(x_fine2)))
 # Вывод максимальных отклонений
 print(f'Максимальное отклонение |Pn(x) - f1(x)| = {max_deviation1}')
 print('Формула Лагранжа для f1(x):')
+
+# Вывод формулы полученного полинома для первой фунекции
 print(lagrange_formula(x_nodes1, y_nodes2))
 
 print(f'Максимальное отклонение |Pn(x) - f2(x)| = {max_deviation2}')
 print('Формула Лагранжа для f2(x):')
+
+# Вывод формулы полученного полинома для первой фунекции
 print(lagrange_formula(x_nodes2, y_nodes2))
 
 # Нахождение оптимального n для каждой функции (n = 3, 5, 9, 17)
@@ -93,7 +97,6 @@ plt.xticks(n2)
 plt.tight_layout()
 plt.show()
 
-# Визуализация
 plt.figure(figsize=(12, 8))
 
 # Построение интерполяционных многочленов для первой функции
@@ -116,7 +119,7 @@ plt.ylabel('y')
 plt.legend()
 plt.grid()
 plt.xlim(-0.1, 2.1)
-plt.ylim(-40, 220)  # Ограничение оси y для первой функции
+plt.ylim(-40, 220)
 
 # Построение интерполяционных многочленов для второй функции
 for n in n_values:
@@ -139,7 +142,7 @@ plt.ylabel('y')
 plt.legend()
 plt.grid()
 plt.xlim(-0.1, 2.1)
-plt.ylim(-30, 90)  # Ограничение оси y для второй функции
+plt.ylim(-30, 90)
 
 plt.tight_layout()
 plt.show()
