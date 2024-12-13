@@ -1,6 +1,5 @@
 import numpy as np
 
-
 class CubicSpline:
     def __init__(self, x, y):
         self.x = np.array(x)
@@ -15,6 +14,21 @@ class CubicSpline:
 
         # Решение системы уравнений
         self._compute_coefficients()
+
+    def _gauss_elimination(self, A, b):
+        n = len(b)
+        # Прямой ход
+        for i in range(n):
+            for j in range(i + 1, n):
+                factor = A[j, i] / A[i, i]
+                A[j, i:] -= factor * A[i, i:]
+                b[j] -= factor * b[i]
+        
+        # Обратный ход
+        x = np.zeros(n)
+        for i in range(n - 1, -1, -1):
+            x[i] = (b[i] - np.dot(A[i, i + 1:], x[i + 1:])) / A[i, i]
+        return x
 
     def _compute_coefficients(self):
         h = np.diff(self.x)
@@ -32,7 +46,7 @@ class CubicSpline:
             b[i] = 3 * ((self.a[i + 1] - self.a[i]) / h[i] - (self.a[i] - self.a[i - 1]) / h[i - 1])
 
         # Решение системы A * c = b
-        self.c = np.linalg.solve(A, b)
+        self.c = self._gauss_elimination(A, b)
 
         for i in range(self.n):
             self.b[i] = (self.a[i + 1] - self.a[i]) / h[i] - h[i] * (2 * self.c[i] + self.c[i + 1]) / 3
